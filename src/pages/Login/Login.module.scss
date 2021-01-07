@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+.Loginpage {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-image: url("../../assets/Bg.jpg");
+  background-size: cover;
+  color: rgb(255, 255, 255);
+  font-family: 'Montserrat', sans-serif;
+  .form__section{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    // outline: solid red;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    width: 50%;
+    height: 70%;
+    margin: auto;
+    box-shadow: 0 0 10px 5px rgb(46, 45, 45);
+
+  }
+  .email__section{
+    display: flex;
+    flex-direction: column;
+    label{
+      padding:10px;
+    }
+  }
+  .password__section{
+    display: flex;
+    flex-direction: column;
+    label{
+      padding:10px;
+    }
+  }
+  .input__field{
+    display:flex;
+    flex-wrap:wrap;
+    font-size: 20px;
+    padding: .5em;
+  }
+  .Login__button{
+      width: 20%;
+      padding: 1em;
+      margin: 1rem;
+  }
+  .SignUp__button{
+      width: 20%;
+      padding: 1em;
+      
+  }
+  .signup__link{
+    text-decoration: none;
+    color: black;
+  }
+}
