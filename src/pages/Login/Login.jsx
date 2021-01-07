@@ -1,29 +1,50 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Login.module.scss";
 function Login() {
-  function handleClick(){
-    alert("You are already in Login page..")
+  const [error, setError] = useState();
+  const [isLoggedIn, setLoggedIn] = useState(false);
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  function handleClick() {
+    alert("You are already in Login page..");
+  }
+  function setUsername(e) {
+    setEmail(e.target.value);
+  }
+  function setUserPassword(e) {
+    setPassword(e.target.value);
+  }
+  function login(e) {
+    e.preventDefault();
+    // if inbuilt validator fails then do this
+    if (email === "" && password === "")
+      setError("Email and password cannot be empty");
+    var formData = new FormData(e.target);
+    var formObject = {};
+    formData.forEach(function (value, key) {
+      formObject[key] = value;
+    });
+    console.log(JSON.stringify(formObject));
   }
   return (
     <div className={styles["Loginpage"]}>
       <h1 onClick={handleClick}>Login Page</h1>
       {/* For displaying Error Message if login is not succesfull */}
-      <p className={styles["error_message"]}>{this.props.error}</p>
+      <p className={styles["error_message"]}>{error}</p>
       <form
-        method="post"
         name="login_form"
         className={styles["form__section"]}
-        onSubmit={this.props.login}
+        onSubmit={login}
         encType="application/x-www-form-urlencoded"
       >
         <div className={styles["email__section"]}>
           <label htmlFor="Email">Email</label>
           <input
             type="email"
-            name="Email"
-            onChange={this.props.setUserEmail}
-            value={this.props.email}
+            name="email"
+            onChange={setUsername}
+            value={email}
             className={styles["input__field"]}
             required
           />
@@ -32,9 +53,9 @@ function Login() {
           <label htmlFor="Password">Password </label>
           <input
             type="password"
-            name="Password"
-            onChange={this.props.setUserEmail}
-            value={this.props.email}
+            name="password"
+            onChange={setUserPassword}
+            value={password}
             className={styles["input__field"]}
             required
           />
