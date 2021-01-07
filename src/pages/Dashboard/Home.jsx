@@ -1,11 +1,17 @@
-import React, { useState, useEffect } from "react";
-function Home() {
-
-  return (
-    <div>
-      <h1>This is home page after Login</h1>
-    </div>
-  );
+import React from "react";
+import { Redirect } from "react-router-dom";
+function Home(props) {
+  if (props.location.state.login_status) {
+    return (
+      <div>
+        <h1>This is home page after Login</h1>
+        <button>Logout</button>
+      </div>
+    );
+  } else {
+    console.log(props.location.state.login_status);
+    return <Redirect to="/" />;
+  }
 }
 
 export default Home;

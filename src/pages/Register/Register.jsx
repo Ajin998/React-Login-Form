@@ -1,5 +1,6 @@
 import React, {useState,useEffect} from "react";
 import { Link } from "react-router-dom";
+import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 import styles from "./Register.module.scss";
 function Register() {
   const[email,setEmail] = useState();
@@ -11,6 +12,11 @@ function Register() {
   return (
     <div className={styles["Loginpage"]}>
       <h1 onClick={handleClick}>Register Page</h1>
+      <button type="button" className={styles["Login__button"]}>
+        <Link to="/" className={styles["signup__link"]}>
+          Back to Login
+        </Link>
+      </button>
       <form method="post" className={styles["form__section"]}>
         <div className={styles["email__section"]}>
           <label htmlFor="Email">
@@ -51,7 +57,7 @@ function Register() {
         </button>
         <button type="button" className={styles["Login__button"]}>
           <Link to="/" className={styles["signup__link"]}>
-            Login
+            <KeyboardBackspaceIcon />
           </Link>
         </button>
       </form>
