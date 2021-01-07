@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { endpoint, login } from "../../constants/endpoints";
+import Cookies from "js-cookie";
+import Home from "../Dashboard/Home";
 import styles from "./Login.module.scss";
 function Login() {
   const [error, setError] = useState();
@@ -15,7 +18,7 @@ function Login() {
   function setUserPassword(e) {
     setPassword(e.target.value);
   }
-  function login(e) {
+  function Login(e) {
     e.preventDefault();
     // if inbuilt validator fails then do this
     if (email === "" && password === "")
@@ -25,8 +28,27 @@ function Login() {
     formData.forEach(function (value, key) {
       formObject[key] = value;
     });
-    console.log(JSON.stringify(formObject));
+    fetch(login, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formObject),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.status.status === "unsuccessfull") {
+          return setError(data.status.message);
+        }
+        Cookies.set("jwt", data.data[0]["jwt"]);
+        setLoggedIn(true);
+        <Home />;
+      })
+      .catch((err) => {
+        console.log("Error:", err);
+      });
   }
+
   return (
     <div className={styles["Loginpage"]}>
       <h1 onClick={handleClick}>Login Page</h1>
@@ -35,17 +57,18 @@ function Login() {
       <form
         name="login_form"
         className={styles["form__section"]}
-        onSubmit={login}
+        onSubmit={Login}
         encType="application/x-www-form-urlencoded"
       >
         <div className={styles["email__section"]}>
-          <label htmlFor="Email">Email</label>
+          <label htmlFor="Email">Username</label>
           <input
             type="email"
             name="email"
             onChange={setUsername}
             value={email}
             className={styles["input__field"]}
+            placeholder="Username is your Email-id"
             required
           />
         </div>
@@ -57,6 +80,7 @@ function Login() {
             onChange={setUserPassword}
             value={password}
             className={styles["input__field"]}
+            placeholder="Password"
             required
           />
         </div>

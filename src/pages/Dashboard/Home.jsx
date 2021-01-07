@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-import Login from "../Login/Login";
 function Home() {
 
   return (
     <div>
-      <h1>This is home page</h1>
+      <h1>This is home page after Login</h1>
     </div>
   );
 }
