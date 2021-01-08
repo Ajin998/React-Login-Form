@@ -1,13 +1,22 @@
-import React, {useState,useEffect} from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 import styles from "./Register.module.scss";
 function Register() {
-  const[email,setEmail] = useState();
-  const[password,setPassword] = useState();
-  const[confirmPassword, setConfirmPassword] = useState();
-  function handleClick(){
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [confirmPassword, setConfirmPassword] = useState();
+  function handleClick() {
     alert("You are already in Register page");
+  }
+  function setMeEmail(e) {
+    setEmail(e.target.value);
+  }
+  function setMePassword(e) {
+    setPassword(e.target.value);
+  }
+  function checkForConfirmPassword(e) {
+    setConfirmPassword(e.target.value);
   }
   return (
     <div className={styles["Loginpage"]}>
@@ -26,6 +35,8 @@ function Register() {
             type="email"
             name="Email"
             className={styles["input__field"]}
+            onChange={setMeEmail}
+            value={email}
             required
           />
         </div>
@@ -37,6 +48,8 @@ function Register() {
             type="password"
             name="Password"
             className={styles["input__field"]}
+            onChange={setMePassword}
+            value={password}
             required
           />
         </div>
@@ -49,6 +62,8 @@ function Register() {
             type="password"
             name="Password"
             className={styles["input__field"]}
+            onChange={checkForConfirmPassword}
+            value={confirmPassword}
             required
           />
         </div>
