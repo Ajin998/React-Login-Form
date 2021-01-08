@@ -1,31 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { Link, Redirect, useHistory } from "react-router-dom";
-import { endpoint, login } from "../../constants/endpoints";
+import React, { useState } from "react";
+import { Link, Redirect } from "react-router-dom";
+import { login } from "../../constants/endpoints";
 import Cookies from "js-cookie";
 import Home from "../Dashboard/Home";
 import styles from "./Login.module.scss";
 function Login() {
-  let history = useHistory();
+  let token = Cookies.get("jwt");
   const [error, setError] = useState("");
-  const [isLoggedIn, setLoggedIn] = useState(false);
+  const [isLoggedIn, setLoggedIn] = useState(token ? true : false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // useEffect(() => {
-  //   var conHeaders = new Headers();
-  //   conHeaders.append("Authorization", "Bearer" + Cookies.get("jwt"));
-  //   fetch(endpoint, {
-  //     headers: conHeaders,
-  //     mode: "cors",
-  //   })
-  //     .then((response) => {
-  //       if (response.ok) return response.json();
-  //       else <p>Error while resolving</p>;
-  //       // else throw new Error("You need to Login.");
-  //     })
-  //     .then((data) => {
-  //       setLoggedIn(true);
-  //     });
-  // }, []);
   function handleClick() {
     alert("You are already in Login page..");
   }
@@ -37,6 +21,7 @@ function Login() {
   }
   function Login(e) {
     e.preventDefault();
+
     // if inbuilt validator fails then do this
     if (email === "" && password === "")
       setError("Email and password cannot be empty");
@@ -73,27 +58,23 @@ function Login() {
   function logout() {
     Cookies.remove("jwt");
     setLoggedIn(false);
+    setEmail("");
+    setPassword("");
     <Redirect to="/" />;
   }
   if (isLoggedIn) {
-    // return (
-    //   <>
-    //     <Redirect
-    //       to={{
-    //         pathname: "/dashboard",
-    //         logout_user: logout,
-    //         state: { login_status: isLoggedIn },
-    //       }}
-    //     />
-    //   </>
-    // );
     return (
-      <>
-        <h1>You are logged in</h1>
-        <button onClick={logout}>Logout</button>
-      </>
+      <div className={styles["LoggedIn__page"]}>
+        <div className={styles["side__panel"]}>
+          <button className={styles["logout__button"]} onClick={logout}>
+            Logout
+          </button>
+        </div>
+        <Home />
+      </div>
     );
   }
+
   return (
     <div className={styles["Loginpage"]}>
       <h1 onClick={handleClick}>Login Page</h1>
