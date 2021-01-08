@@ -58,7 +58,7 @@ function Login() {
         }
         if (data.data === undefined) {
           alert(
-            "Hmm..seems like you are new User \n You need to create a new account for this!!"
+            "Hmm..seems like you are a new User \n You need to create a new account for this!!"
           );
         } else {
           Cookies.set("jwt", data.data[0]["jwt"]);
