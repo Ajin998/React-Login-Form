@@ -4,11 +4,14 @@ import { signup } from "../../constants/endpoints";
 import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 import styles from "./Register.module.scss";
 function Register() {
-  const [error, setError] = useState();
-  const [status, setStatus] = useState();
+  const [error, setError] = useState("");
+  const [status, setStatus] = useState(false);
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [confirmPassword, setConfirmPassword] = useState();
+  const [firstName, setFirstName] = useState();
+  const [lastName, setLastName] = useState();
+  const [username, setUsername] = useState();
 
   let redirect;
   function handleClick() {
@@ -23,9 +26,25 @@ function Register() {
   function checkForConfirmPassword(e) {
     setConfirmPassword(e.target.value);
   }
+  function setMeFirstName(e) {
+    setFirstName(e.target.value);
+  }
+  function setMeLastName(e) {
+    setLastName(e.target.value);
+  }
+  function setMeusername(e) {
+    setUsername(e.target.value);
+  }
   function signMeUp(e) {
     e.preventDefault();
-    let formData = { email, password, confirmPassword };
+    let formData = {
+      email,
+      password,
+      confirmPassword,
+      firstName,
+      lastName,
+      username,
+    };
     let formObject = JSON.stringify(formData);
     fetch(signup, {
       method: "POST",
@@ -36,8 +55,12 @@ function Register() {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.status === "Unsuccessfull") return setError(data.message);
-        setStatus(data.status);
+        if (data.status === "unsuccessful") {
+          setError(data.message);
+          return;
+        }
+
+        setStatus(true);
       })
       .catch((err) => {
         console.log("Kuch tho fatta:", err);
@@ -56,9 +79,13 @@ function Register() {
       {error && <p className={styles["error__msg"]}>{error}</p>}
       {status && (
         <>
-        {redirect= window.confirm("Signed Up\nPress OK to Go in Login Page")}
+          {
+            (redirect = window.confirm(
+              "Signed Up\nPress OK to Go to Login Page"
+            ))
+          }
           {/* <p className={styles["status__msg"]}>{status}</p> */}
-          {redirect?<Redirect to="/" />: <Redirect to="/register" />}
+          {redirect ? <Redirect to="/" /> : <Redirect to="/register" />}
         </>
       )}
       {/* {status && <p className={styles["status__msg"]}>{status}</p>} */}
@@ -66,6 +93,7 @@ function Register() {
         method="post"
         onSubmit={signMeUp}
         name="signup__form"
+        id="form__details"
         encType="application/x-www-form-urlencoded"
         className={styles["form__section"]}
       >
@@ -84,7 +112,11 @@ function Register() {
         </div>
         <div className={styles["password__section"]}>
           <label htmlFor="Password" name="password">
-            Password<sup>*</sup>{" "}
+            Password
+            <sup>
+              (Atleast one capital,small letters, symbol and total 8
+              characters)*
+            </sup>{" "}
           </label>
           <input
             type="password"
@@ -96,19 +128,59 @@ function Register() {
           />
         </div>
         <div className={styles["password__section"]}>
-          <label htmlFor="Password" name="confirmPassword">
+          <label htmlFor="confirmPassword" name="confirmPassword">
             {" "}
-            Confirm-Password<sup>*</sup>{" "}
+            ConfirmPassword<sup>*</sup>{" "}
           </label>
           <input
             type="password"
-            name="Password"
+            name="confirmPassword"
             className={styles["input__field"]}
             onChange={checkForConfirmPassword}
             value={confirmPassword}
             required
           />
         </div>
+        <div className={styles["password__section"]}>
+          <label htmlFor="Password" name="confirmPassword">
+            {" "}
+            Firstname<sup>(optional)</sup>{" "}
+          </label>
+          <input
+            type="text"
+            name="firstName"
+            className={styles["input__field"]}
+            onChange={setMeFirstName}
+            value={firstName}
+          />
+        </div>
+        <div className={styles["password__section"]}>
+          <label htmlFor="Password" name="confirmPassword">
+            {" "}
+            Lastname<sup>(optional)</sup>{" "}
+          </label>
+          <input
+            type="text"
+            name="lastName"
+            className={styles["input__field"]}
+            onChange={setMeLastName}
+            value={lastName}
+          />
+        </div>
+        <div className={styles["password__section"]}>
+          <label htmlFor="Password" name="confirmPassword">
+            {" "}
+            Username<sup>(optional)</sup>{" "}
+          </label>
+          <input
+            type="text"
+            name="username"
+            className={styles["input__field"]}
+            onChange={setMeusername}
+            value={username}
+          />
+        </div>
+
         <button type="submit" className={styles["SignUp__button"]}>
           SignUp
         </button>

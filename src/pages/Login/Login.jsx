@@ -10,21 +10,23 @@ function Login() {
   const [isLoggedIn, setLoggedIn] = useState(token ? true : false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   function handleClick() {
     alert("You are already in Login page..");
   }
-  function setUsername(e) {
+  function SetUsername(e) {
     setEmail(e.target.value);
   }
-  function setUserPassword(e) {
+  function SetUserPassword(e) {
     setPassword(e.target.value);
   }
-  function Login(e) {
-    e.preventDefault();
 
+  function LoginUser(e) {
+    e.preventDefault();
     // if inbuilt validator fails then do this
-    if (email === "" && password === "")
+    if (email === "" && password === "") {
       setError("Email and password cannot be empty");
+    }
     var formData = new FormData(e.target);
     var formObject = {};
     formData.forEach(function (value, key) {
@@ -39,23 +41,22 @@ function Login() {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.status.status === "unsuccessfull") {
-          return setError(data.status.message);
+        if (data.status === "unsuccessful") {
+          setError(data.message);
+          return;
         }
-        if (data.data === undefined) {
-          alert(
-            "Hmm..seems like you are a new User \n You need to create a new account for this!!"
-          );
-        } else {
+        if (data.data !== undefined) {
           Cookies.set("jwt", data.data[0]["jwt"]);
           setLoggedIn(true);
+          return;
         }
       })
       .catch((err) => {
         console.log("Error:", err);
       });
   }
-  function logout() {
+
+  function Logout() {
     Cookies.remove("jwt");
     setLoggedIn(false);
     setEmail("");
@@ -66,7 +67,7 @@ function Login() {
     return (
       <div className={styles["LoggedIn__page"]}>
         <div className={styles["side__panel"]}>
-          <button className={styles["logout__button"]} onClick={logout}>
+          <button className={styles["logout__button"]} onClick={Logout}>
             Logout
           </button>
         </div>
@@ -74,16 +75,15 @@ function Login() {
       </div>
     );
   }
-
   return (
     <div className={styles["Loginpage"]}>
       <h1 onClick={handleClick}>Login Page</h1>
       {/* For displaying Error Message if login is not succesfull */}
-      <p className={styles["error_message"]}>{error}</p>
+      {error && <p className={styles["error_message"]}>{error}</p>}
       <form
         name="login_form"
         className={styles["form__section"]}
-        onSubmit={Login}
+        onSubmit={LoginUser}
         encType="application/x-www-form-urlencoded"
       >
         <div className={styles["email__section"]}>
@@ -91,7 +91,7 @@ function Login() {
           <input
             type="email"
             name="email"
-            onChange={setUsername}
+            onChange={SetUsername}
             value={email}
             className={styles["input__field"]}
             placeholder="your email-id"
@@ -103,7 +103,7 @@ function Login() {
           <input
             type="password"
             name="password"
-            onChange={setUserPassword}
+            onChange={SetUserPassword}
             value={password}
             className={styles["input__field"]}
             placeholder="password"
