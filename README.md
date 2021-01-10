@@ -1,3 +1,55 @@
+# Basic React application for Login and Signup users along with custom Authentication
+
+This project demonstrate how a simple login and signup system works without using any state management library Like Redux,MobX...
+
+## Basic Setup:-
+
+1. Clone the repository in your local repository by Typing:-
+   ```
+   $git clone https://github.com/Ajin998/React-Login-Form.git
+   ```
+2. After cloning the repository install all the node dependencies by typing:-
+   ```
+   $npm i
+   ```
+   or
+   ```
+   $npm install
+   ```
+3. After installing, node_modules and package-lock.json file will be installed in your root directory
+
+4. Then to start the application type:-
+
+    ```
+    $npm start
+    ```
+
+5. You will see that our application will be running at localhost 3000.
+6. Now you are at the home page which displays the login page.
+7. Since you are a new user hence click on Signup button to create an account.
+8. Fill all your details in register page.
+9. While filling your details make sure you that your password should contain alteast 1 capital letter, 1 small letter, 1 Special character and atleast have 8 characters.
+10. *fields are mandatory to fill and optional fields are not mandatory.
+11. After filling all your details hit signup button.
+12. If signup successful then it will confirm you to go in Login page.
+13. Click ok to redirect to login page and fill username as your email-id  and your password.
+14. Once Login is successful, it will render a dummy component with logout__button on it.
+15. Your page persist even after you refresh it.
+
+
+## Author:-
+
+- **Ajin Varghese** - _Github_ - [Ajin998](https://github.com/Ajin998)
+
+![Ajin](https://user-images.githubusercontent.com/73870819/104104221-c3664e80-52cc-11eb-9cef-4bfff11cae27.png)
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+
+
+---
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
